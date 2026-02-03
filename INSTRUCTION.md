@@ -5,14 +5,14 @@ This guide explains how to verify that the `todoapp` pod has the necessary permi
 ## Prerequisites
 1. Apply the RBAC configuration:
    ```bash
-   kubectl apply -f security/rbac.yaml
+   kubectl apply -f .infrastructure/security/rbac.yml
 
 2. Update the deployment to use the new ServiceAccount:
 
-kubectl apply -f development.yml
+kubectl apply -f .infrastructure/app/deployment.yml
 
-3. Execute the following command to verify that the Pod can communicate with the Kubernetes API and list secrets:
+3. ## Verification Command
+Run the following command to test RBAC permissions:
 
-
-kubectl exec -it $(kubectl get pod -l app=todoapp -n todoapp -o jsonpath='{.items[0].metadata.name}') -n todoapp -- sh -c 'curl -s --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" [https://kubernetes.default.svc/api/v1/namespaces/$(cat](https://kubernetes.default.svc/api/v1/namespaces/$(cat) /var/run/secrets/kubernetes.io/serviceaccount/namespace)/secrets'
-
+```bash
+kubectl exec -it $(kubectl get pod -l app=todoapp -n todoapp -o jsonpath='{.items[0].metadata.name}') -n todoapp -- sh -c 'curl -s --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" "[https://kubernetes.default.svc/api/v1/namespaces/$(cat](https://kubernetes.default.svc/api/v1/namespaces/$(cat) /var/run/secrets/kubernetes.io/serviceaccount/namespace)/secrets"'
