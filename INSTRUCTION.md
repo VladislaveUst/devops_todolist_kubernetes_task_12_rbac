@@ -15,4 +15,8 @@ kubectl apply -f .infrastructure/app/deployment.yml
 Run the following command to test RBAC permissions:
 
 ```bash
-kubectl exec -it $(kubectl get pod -l app=todoapp -n todoapp -o jsonpath='{.items[0].metadata.name}') -n todoapp -- sh -c 'curl -s --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt -H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" "[https://kubernetes.default.svc/api/v1/namespaces/$(cat](https://kubernetes.default.svc/api/v1/namespaces/$(cat) /var/run/secrets/kubernetes.io/serviceaccount/namespace)/secrets"'
+kubectl exec -it <pod-name> -n todoapp -- bash
+
+curl -s --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+-H "Authorization: Bearer $(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+[https://kubernetes.default.svc/api/v1/namespaces/$(cat](https://kubernetes.default.svc/api/v1/namespaces/$(cat) /var/run/secrets/kubernetes.io/serviceaccount/namespace)/secrets
